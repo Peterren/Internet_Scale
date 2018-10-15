@@ -1,0 +1,8 @@
+1. As a rider I want to have a driver ratings function so that I can choose dependable drivers.
+2. As a user I want a website that shows my personal information only when needed so I can protect my privacy.
+3. As a rider I want a real-time capacity update so I can know if there are still space on the ride I want to join.
+4. As a user I want a deposit feature so that my reserved driver/rider will honor the agreement.
+5. As a user I want a search feature so I can navigate easily to the rides I want.
+6. As a user I want a upcoming trips feature to remind me of my reserved rides.
+7. As a driver I want a pick-up location field in ride reservation so that I know where to pick up my riders.
+8. As a rider I want a filter feature so that I can focus on the rides that are relevant to me. 
