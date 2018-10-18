@@ -13,9 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
+
 from django.urls import path
+from explayer import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('list_drivers', views.list_drivers, name='list_drivers'),
+    # path('create_driver', views.create_driver, name='create_driver'),
+    # path('update_driver/<int:id>', views.update_driver, name='update_driver'),
+    # path('delete_driver/<int:id>', views.delete_driver, name='delete_driver'),
 ]

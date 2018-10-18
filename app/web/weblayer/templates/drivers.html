@@ -9,14 +9,16 @@
 </head>
 <body>
 	<ul>
-		{% for driver in drivers %}
-			<a href="{% url 'update_driver' driver.id %}">
-				<li>{{ driver}}</li>
-			</a>
-		{% endfor %}
+{#		{% for driver in drivers %}#}
+{#			<a href="{% url 'update_driver' driver.id %}">#}
+{#				<li>{{ driver}}</li>#}
+{#			</a>#}
+{#            <li>{{ driver}}</li>#}
+{#		{% endfor %}#}
+        {{ drivers }}
 
 	</ul>
-	<a href="{% url 'create_driver' %}">New Driver Signup </a>
+{#	<a href="{% url 'create_driver' %}">New Driver Signup </a>#}
 
 </body>
 </html>

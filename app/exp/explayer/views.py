@@ -1,33 +1,62 @@
 from django.shortcuts import render, redirect
-
-from .models import Driver
+import json
 from .forms import DriverForm
+from django.http import JsonResponse
+import urllib.request
+import urllib.parse
+import json
 
 def list_drivers(request):
-    drivers = Driver.objects.all()
-    return render(request, 'drivers.html',{'drivers': drivers})
+    req = urllib.request.Request('http://models-api:8000/list_drivers')
+    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+    respond = json.loads(resp_json)
 
-def create_driver(request):
-    form = DriverForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect('list_drivers')
-    return render(request, 'drivers-form.html',{'form':form})
+    if respond["state"] == "Fail":
+        return JsonResponse({'state': "Fail", 'error': respond["error"]})
+    drivers = respond["drivers"]
+    return JsonResponse({'state': "Success", 'drivers': drivers})
+#
+# def create_driver(request):
+#     if request.method == "GET":
+#         return JsonResponse({'state': "Fail", 'error': 'USE POST REQUEST!'})
+#     else:
+#         form = DriverForm(request.POST)
+#         if form.is_valid():
+#
+#             post_data = {""request.POST.get()
+#             post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
+#
+#             req = urllib.request.Request('http://placeholder.com/v1/api/posts/create', data=post_encoded, method='POST')
+#             resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+#
+#             resp = json.loads(resp_json)
+#             respond = requests.post(f'http://models-api:8001/create_user', data=request.POST)
+#             if respond.json()["state"] == "Fail":
+#                 return JsonResponse({'state': "Fail", 'error': respond.json()["error"]})
+#             return redirect('list_drivers')
+#         return JsonResponse({'state': "Fail", 'error': 'Invalid Input!'})
+#
+#
+# def update_driver(request, id):
+#     if request.method == "GET":
+#         return JsonResponse({'state': "Fail", 'error': 'USE POST REQUEST!'})
+#     else:
+#         form = DriverForm(request.POST)
+#         if form.is_valid():
+#             respond = requests.post(f'http://models-api:8001/update_user/{id!s}', data=request.POST)
+#             if respond.json()["state"] == "Fail":
+#                 return JsonResponse({'state': "Fail", 'error': respond.json()["error"]})
+#             return redirect('list_drivers')
+#         return JsonResponse({'state': "Fail", 'error': 'Invalid Input!'})
+#
+# def delete_driver(request, id):
+#     if request.method == "GET":
+#         return render(request, 'drivers-form.html', {'form': "Use Post Request!"})
+#     else:
+#         respond = requests.post(f'http://models-api:8001/delete_user/{id!s}', data=request.POST)
+#         if respond.json()["state"] == "Fail":
+#             return JsonResponse({'state': "Fail", 'error': respond.json()["error"]})
+#         driver = respond.json()["driver"]
+#         return render(request, 'driver-delete-confirm.html', {'driver': driver})
 
-def update_driver(request, id):
-    driver = Driver.objects.get(id=id)
-    form = DriverForm(request.POST or None, instance = driver)
-    if form.is_valid():
-        form.save()
-        return redirect('list_drivers')
-
-    return render(request, 'drivers-form.html',{'form':form, 'driver': driver})
-
-def delete_driver(request, id):
-    driver = Driver.objects.get(id=id)
-    if request.method == 'POST':
-        driver.delete()
-        return redirect('list_drivers')
-
-    return render(request, 'driver-delete-confirm.html',{'driver': driver})
 

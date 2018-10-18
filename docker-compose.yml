@@ -4,10 +4,10 @@ models:
   external_links:
     - mysql:db
   volumes:
-    - "$PWD/app:/app"
+    - "$PWD/app/models:/app"
   ports:
     - "8001:8000"
-  command: bash -c "mod_wsgi-express start-server --working-directory /app/models --reload-on-changes cs4501/app/models/models/wsgi.py"
+  command: bash -c "mod_wsgi-express start-server  --working-directory . --reload-on-changes models/wsgi.py"
 
 exp:
   image: tp33/django
@@ -15,10 +15,10 @@ exp:
   links:
     - models:models-api
   volumes:
-    - "$PWD/app:/app"
+    - "$PWD/app/exp:/app"
   ports:
     - "8002:8000"
-  command: bash -c "mod_wsgi-express start-server --working-directory /app/exp --reload-on-changes cs4501/app/exp/exp/wsgi.py"
+  command: bash -c "mod_wsgi-express start-server  --working-directory . --reload-on-changes exp/wsgi.py"
 
 
 web:
@@ -27,7 +27,7 @@ web:
   links:
     - exp:exp-api
   volumes:
-    - "$PWD/app:/app"
+    - "$PWD/app/web:/app"
   ports:
     - "8000:8000"
-    command: bash -c "mod_wsgi-express start-server --working-directory /app/web --reload-on-changes cs4501/app/web/web/wsgi.py"
+  command: bash -c "mod_wsgi-express start-server --working-directory . --reload-on-changes web/wsgi.py"
