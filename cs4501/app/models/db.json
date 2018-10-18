@@ -1,1 +1,0 @@
-[{"model": "products.product", "pk": 1, "fields": {"description": "Ride to Nova", "price": "20.00", "quantity": 2}}, {"model": "products.product", "pk": 2, "fields": {"description": "Ride to VT", "price": "20.00", "quantity": 4}} , {"model": "products.product", "pk": 3, "fields": {"description": "Ride to New York", "price": "120.00", "quantity": 4}}]
