@@ -118,5 +118,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-# STATIC_URL = '/static/'
-STATIC_URL = 'weblayer.static'
+STATIC_URL = '/static/'
+MAIN_PROJECT = os.path.dirname(__file__)
+STATICFILES_DIRS = (
+    os.path.join(MAIN_PROJECT, 'static/'),
+)
