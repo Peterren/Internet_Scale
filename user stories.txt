@@ -6,3 +6,5 @@
 6. As a user I want a upcoming trips feature to remind me of my reserved rides.
 7. As a driver I want a pick-up location field in ride reservation so that I know where to pick up my riders.
 8. As a rider I want a filter feature so that I can focus on the rides that are relevant to me. 
+9. As a driver I want to be able to update my information.
+10. As a rider I want to be able to place ride request.
