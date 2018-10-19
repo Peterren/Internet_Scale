@@ -15,6 +15,18 @@ def list_drivers(request):
         return JsonResponse({'state': "Fail", 'error': respond["error"]})
     drivers = respond["drivers"]
     return JsonResponse({'state': "Success", 'drivers': drivers})
+
+def get_driver(request, id):
+
+    url = 'http://models-api:8000/get_driver/'+str(id)
+    req = urllib.request.Request(url)
+    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+    respond = json.loads(resp_json)
+
+    if respond["state"] == "Fail":
+        return JsonResponse({'state': "Fail", 'error': respond["error"]})
+    driver = respond["driver"]
+    return JsonResponse({'state': "Success", 'driver': driver})
 #
 # def create_driver(request):
 #     if request.method == "GET":

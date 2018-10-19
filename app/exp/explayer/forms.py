@@ -6,3 +6,4 @@ class DriverForm(forms.Form):
     last_name = forms.CharField(label="Last Name", max_length=30)
     car_model = forms.CharField(label="Car Model", max_length=30)
     rating = forms.FloatField(label="Rating")
+    # id = forms.IntegerField(label = "ID")

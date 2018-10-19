@@ -1,21 +1,26 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <style>
+    #heading { color: #FF0000; }
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+{#    <link rel="stylesheet" type="text/css" href="{% static 'style.css'%}">#}
     <title>Document</title>
 </head>
 <body>
 	<ul>
-{#		{% for driver in drivers %}#}
+		{% for driver in drivers %}
 {#			<a href="{% url 'update_driver' driver.id %}">#}
 {#				<li>{{ driver}}</li>#}
 {#			</a>#}
-{#            <li>{{ driver}}</li>#}
-{#		{% endfor %}#}
-        {{ drivers }}
+
+            <li>{{ driver}}</li>
+		{% endfor %}
+{#        {{ drivers }}#}
 
 	</ul>
 {#	<a href="{% url 'create_driver' %}">New Driver Signup </a>#}

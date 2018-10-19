@@ -19,6 +19,7 @@ from explayer import views
 
 urlpatterns = [
     path('list_drivers', views.list_drivers, name='list_drivers'),
+    path('get_driver/<int:id>', views.get_driver, name='get_driver'),
     # path('create_driver', views.create_driver, name='create_driver'),
     # path('update_driver/<int:id>', views.update_driver, name='update_driver'),
     # path('delete_driver/<int:id>', views.delete_driver, name='delete_driver'),

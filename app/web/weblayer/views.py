@@ -13,7 +13,14 @@ def list_drivers(request):
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     respond = json.loads(resp_json)
     drivers = respond["drivers"]
-    return render(request, 'drivers.html',{'drivers': drivers})
+    return render(request, 'drivers.html', {'drivers': drivers})
+    # if len(drivers) > 5:
+    #     drivers = drivers[1:-2].split("},")
+    #     drivers = [json.loads(x+"}")["fields"] for x in drivers]
+    #     return render(request, 'drivers.html',{'drivers': drivers})
+    # else:
+    #     return render(request, 'drivers.html', {'drivers': ""})
+
 #
 # def create_driver(request):
 #     if request.method == "GET":
