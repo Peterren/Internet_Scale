@@ -4,7 +4,7 @@ models:
   external_links:
     - mysql:db
   volumes:
-    - "$PWD/app/models:/app"
+    - "./app/models:/app"
   ports:
     - "8001:8000"
   command: bash -c "mod_wsgi-express start-server  --working-directory . --reload-on-changes models/wsgi.py"
@@ -15,7 +15,7 @@ exp:
   links:
     - models:models-api
   volumes:
-    - "$PWD/app/exp:/app"
+    - "./app/exp:/app"
   ports:
     - "8002:8000"
   command: bash -c "mod_wsgi-express start-server  --working-directory . --reload-on-changes exp/wsgi.py"
@@ -27,7 +27,7 @@ web:
   links:
     - exp:exp-api
   volumes:
-    - "$PWD/app/web:/app"
+    - "./app/web:/app"
   ports:
     - "8000:8000"
   command: bash -c "mod_wsgi-express start-server --working-directory . --reload-on-changes web/wsgi.py"
