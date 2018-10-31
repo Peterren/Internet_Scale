@@ -5,6 +5,9 @@ from django.http import JsonResponse
 import urllib.request
 import urllib.parse
 import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from . import get, forward_post
 
 def list_drivers(request):
     req = urllib.request.Request('http://models-api:8000/list_drivers')
@@ -71,4 +74,6 @@ def get_driver(request, id):
 #         driver = respond.json()["driver"]
 #         return render(request, 'driver-delete-confirm.html', {'driver': driver})
 
-
+@csrf_exempt
+def create_driver(request):
+    return forward_post(request, 'drivers', ['first_name', 'last_name', 'car_model', 'rating'])

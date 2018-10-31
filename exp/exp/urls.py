@@ -1,26 +1,7 @@
-"""exp URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-
-from django.urls import path
-from explayer import views
+from django.conf.urls import include, url
+from django.contrib import admin
 
 urlpatterns = [
-    path('list_drivers', views.list_drivers, name='list_drivers'),
-    path('get_driver/<int:id>', views.get_driver, name='get_driver'),
-    # path('create_driver', views.create_driver, name='create_driver'),
-    # path('update_driver/<int:id>', views.update_driver, name='update_driver'),
-    # path('delete_driver/<int:id>', views.delete_driver, name='delete_driver'),
+    url(r'^', include('exp_app.urls')),
+    url(r'^admin/', admin.site.urls),
 ]
