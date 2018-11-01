@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load filters %}
+{% load sass_tags %}
+
+{% block head %}
+	<link href="{% sass_src 'styles/register-user.scss' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+	<form method="post" id="register">
+		<h1>Register</h1>
+		{% csrf_token %}
+		{% for field in form %}
+			{% if field.name != 'birthday' %}
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label {{ field.name }}">
+					<label class="mdl-textfield__label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+					{{ field|material_field }}
+					{% if field.errors %}
+						<span class="mdl-textfield__error">{{ field.errors }}</span>
+					{% endif %}
+					{% if field.help_text %}
+						<span class="mdl-tooltip" for="{{ field.id_for_label }}">{{ field.help_text }}</span>
+					{% endif %}
+				</div>
+			{% endif %}
+		{% endfor %}
+
+		{% with field=form.birthday %}
+			<div class="date">
+				<label for="{{ field.id_for_label }}">{{ field.label }}</label>
+				{{ field }}
+				{% if field.errors %}
+					<span class="mdl-textfield__error">{{ field.errors }}</span>
+				{% endif %}
+				{% if field.help_text %}
+					<span class="mdl-tooltip" for="{{ field.id_for_label }}">{{ field.help_text }}</span>
+				{% endif %}
+			</div>
+		{% endwith %}
+
+		<footer>
+			<button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Register</button>
+			<a class="mdl-button mdl-js-button mdl-js-ripple-effect" href="{% url 'login' %}">
+				Login to Existing Account
+			</a>
+		</footer>
+	</form>
+{% endblock %}
