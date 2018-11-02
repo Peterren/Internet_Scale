@@ -19,9 +19,14 @@ def list_drivers(request):
     drivers = respond["drivers"]
     return JsonResponse({'state': "Success", 'drivers': drivers})
 
+<<<<<<< HEAD
 
 def get_driver(request, username):
     # login_required
+=======
+def get_driver(request, username):
+
+>>>>>>> origin/master
     url = 'http://models-api:8000/get_driver/'+str(username)
     req = urllib.request.Request(url)
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
@@ -57,7 +62,10 @@ def create_driver(request):
 
 
 def update_driver(request, username):
+<<<<<<< HEAD
     # login_required
+=======
+>>>>>>> origin/master
     if request.method == "GET":
         return JsonResponse({'state': "Fail", 'error': 'USE POST REQUEST!'})
     else:
