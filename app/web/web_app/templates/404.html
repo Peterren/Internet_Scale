@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load sass_tags %}
+
+{% block head %}
+	<link href="{% sass_src 'styles/404.scss' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+	<i class="material-icons"><a href="{% url 'index' %}">warning</a></i>
+	<h1><a href="{% url 'index' %}">Error 404</a></h1>
+	<h4>The page requested doesn't exist</h4>
+{% endblock %}
