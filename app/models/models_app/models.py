@@ -15,8 +15,6 @@ class Driver (models.Model):
         return self.first_name+" "+self.last_name
 
 class Product(models.Model):
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=20)
     description = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=9, decimal_places=2)
     quantity = models.IntegerField()

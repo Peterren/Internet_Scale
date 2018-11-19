@@ -4,10 +4,17 @@ from .forms import DriverForm
 from django.http import JsonResponse
 import urllib.request
 import urllib.parse
+from kafka import KafkaProducer
+import time
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from . import get, forward_post
+from elasticsearch import Elasticsearch
+
+es = Elasticsearch(['es'])
+producer = KafkaProducer(bootstrap_servers='kafka:9092')
+
 
 def list_drivers(request):
     req = urllib.request.Request('http://models-api:8000/list_drivers')
@@ -52,7 +59,13 @@ def create_driver(request):
             respond = json.loads(resp_json)
             if respond.json()["state"] == "Fail":
                 return JsonResponse({'state': "Fail", 'error': respond.json()["error"]})
-            return redirect('list_drivers')
+            else:
+                try:
+                    producer.send('drivers', json.dumps(post_data).encode('utf-8'))
+                except:
+                    time.sleep(1)
+                    producer.send('drivers', json.dumps(post_data).encode('utf-8'))
+                return redirect('list_drivers')
         return JsonResponse({'state': "Fail", 'error': 'Invalid Input!'})
 
 
@@ -79,6 +92,20 @@ def update_driver(request, username):
                 return JsonResponse({'state': "Fail", 'error': respond.json()["error"]})
             return redirect('list_drivers')
         return JsonResponse({'state': "Fail", 'error': 'Invalid Input!'})
+
+def search_drivers(request):
+    if request.method == "GET":
+        return JsonResponse({'state': "Fail", 'error': 'USE POST REQUEST!'})
+
+    if "QUERY" not in request.POST:
+        return JsonResponse({'state': "Fail", 'error': 'QUERY MISSING!'})
+    else:
+        result = es.search(index = "drivers-indexer", body = {'query':{'query_string':{'query': request.POST['QUERY']}}, 'size':10}))
+        if result['timed_out']:
+            return JsonResponse{'state': "Fail", 'error': 'QUERY TIMED OUT!'}
+        else:
+            return JsonResponse({'state': "Success", 'result': result["hits"]})
+
 
 # def delete_driver(request, id):
 #     if request.method == "GET":

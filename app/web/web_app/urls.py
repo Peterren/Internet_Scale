@@ -13,5 +13,6 @@ urlpatterns = [
     path('login/?$', auth_views.login, name='login'),
     path('logout/?$', auth_views.logout, name='logout'),
     path('register/?$', auth_views.register, name='register-user'),
+    path('search_drivers/?$', views.search_drivers, name = 'search_drivers')
     path('.*$', views.bad_url, name='404'),
 ]
