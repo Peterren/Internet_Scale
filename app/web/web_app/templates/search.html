@@ -1,0 +1,43 @@
+<!doctype html>
+
+    <head>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+
+        <script>
+            $(function(results) {
+               $.each(substr, function(index, results) {
+                $.getJSON(results[index], function(data.product) {
+                    $.each(data.person, function(i, f) {
+                        var tblRow = "<tr>" + "<td>" + f.descriptions + "</td>" +
+           "<td>" + f.price + "</td>" + "<td>" + f.quantity + "</td>" + "</tr>"
+           $(tblRow).appendTo("#productdata tbody");
+                    $(tblRow).appendTo("#productdata tbody");
+                    });
+
+                });
+                });
+
+            });
+        </script>
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
+    <!--    <link rel="stylesheet" href="//d2d3qesrx8xj6s.cloudfront.net/dist/bootsnipp.min.css?ver=872ccd9c6dce18ce6ea4d5106540f089">-->
+    <link rel="stylesheet" href="/dist/bootsnipp.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    	<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+    	<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.2.0/respond.js"></script>
+    <![endif]-->
+        <title> Search Results </title>
+    </head>
+
+    <body>
+        <p class='col-md-12 col-xs-12'>We have found {{num}} results.</p>
+        <div class='table-responsive'></div>
+							<table class='productdata'>
+                                    <tbody>
+
+                                </tbody>
+                            </table>
+    </body>
