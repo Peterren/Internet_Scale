@@ -7,6 +7,7 @@ import urllib.parse
 import json
 
 
+
 @login_required
 def list_drivers(request):
 #    drivers = Driver.objects.all()
@@ -74,6 +75,22 @@ def update_driver(request, username):
                 return render(request, 'drivers-form.html', {'form': respond.json()["error"]})
             return HttpResponseRedirect('/')  # 可改homepage地址
     return render(request, 'drivers-form.html', {'form': "Invalid Input!"})
+
+def search_drivers():
+    if request.method == "GET":
+        return JsonResponse({'state': "Fail", 'error': 'USE POST REQUEST!'})
+    if "QUERY" not in request.POST:
+        return JsonResponse({'state': "Fail", 'error': 'QUERY MISSING!'})
+    req = urllib.request.Request('http://exp-api:8000/search_drivers')
+    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
+    respond = json.loads(resp_json)
+    if respond['state'] == "Fail":
+        return JsonResponse(respond)
+    else:
+        num = respond['result']['total']
+        hits = respond['result']['hits']
+        result = [driver["_source"] for driver in hits]
+        return render(request, 'search.html', {'num': num, 'results': result})
 #
 # def delete_driver(request, id):
 #     if request.method == "GET":

@@ -31,3 +31,45 @@ web:
   ports:
     - "8000:8000"
   command: bash -c "mod_wsgi-express start-server --working-directory . --reload-on-changes web/wsgi.py"
+
+kafka:
+   image: spotify/kafka
+   container_name: kafka
+   environment:
+      ADVERTISED_HOST: kafka
+      ADVERTISED_PORT: 9092
+   hostname: kafka
+
+es:
+   image: elasticsearch:2.0
+   container_name: es
+   ports:
+      - "9200:9200"
+
+batch:
+   image: tp33/django
+   container_name: batch
+   volumes:
+     - "$PWD/app:/app"
+   links:
+      - kafka:kafka
+      - es:es
+   command: python /app/script.py
+
+selenium-chrome:
+  image: selenium/standalone-chrome
+  container_name: selenium-chrome
+  links:
+    - web:web
+  ports:
+    - "4444:4444"
+
+selenium-test:
+  image: tp33/django
+  container_name: selenium-test
+  links:
+    - selenium-chrome:selenium-chrome
+    - web:web
+  volumes:
+    - ./app/selenium:/app
+  command: bash -c "pip install selenium==<some version number> && python <your_selenium_test_script>.py"
