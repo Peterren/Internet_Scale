@@ -1,0 +1,35 @@
+language: python
+
+
+python:
+	- "3.7"
+
+
+services:
+	- docker
+
+
+before_install:
+	- docker pull tp33/django
+	- docker pull mysql:5.7.14
+	- mkdir db
+	- docker run --name mysql -d -e MYSQL_ROOT_PASSWORD='$3cureUS' -v ~/db:/var/lib/mysql mysql:5.7.23
+	- docker run -it --name mysql-cmdline --link mysql:db mysql:5.7.14 mysql -uroot -p'$3cureUS' -h db -e "CREATE USER 'www'@'%' IDENTIFIED BY '\$3cureUS'; CREATE DATABASE cs4501 CHARACTER SET utf8; GRANT ALL PRIVILEGES ON *.* TO 'www'@'%';"
+	- docker rm mysql-cmdline
+
+install:
+  - pip install redis
+
+before_script:
+  - docker-compose up
+
+script:
+	- docker exec -it models bash -c "python manage.py test"
+  - docker exec -it exp bash -c "python manage.py test"
+  - docker exec -it web bash -c "python manage.py test"
+
+after_script:
+ - docker-compose down
+ - docker stop mysql
+ - docker rm mysql
+ - rm -rf db

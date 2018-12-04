@@ -49,6 +49,8 @@ MIDDLEWARE = [
     'web_app.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware',
+   'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'web.urls'
@@ -136,6 +138,17 @@ COMPRESS_PRECOMPILERS = (
     ('text/x-css', 'django_libsass.SassCompiler'),
 )
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "PASSWORD": "password",
+        }
+    }
+}
+
 # Sass
 SASS_PROCESSOR_ENABLED = True
 SASS_PROCESSOR_INCLUDE_DIRS = [
@@ -146,3 +159,6 @@ SASS_PRECISION = 8
 
 # Session
 SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+
+CACHE_MIDDLEWARE_ALIAS = "Redis"
+CACHE_MIDDLEWARE_SECONDS – 5
