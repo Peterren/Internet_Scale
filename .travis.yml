@@ -27,8 +27,6 @@ before_script:
 
 script:
  - docker exec -it models bash -c "python manage.py test"
- - docker exec -it exp bash -c "python manage.py test"
- - docker exec -it web bash -c "python manage.py test"
 
 after_script:
  - docker-compose down
