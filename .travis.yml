@@ -21,6 +21,7 @@ before_install:
 install:
  - pip install redis
  - pip install Django
+ - pip install djangorestframework
 
 before_script:
  - docker-compose build
