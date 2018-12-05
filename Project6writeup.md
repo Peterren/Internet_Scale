@@ -11,7 +11,7 @@ we linked our github repository to Travis CI and create .travis.yml file to let 
 
 **Load Balancing and Haproxy**
 
-To create a load balancer, we createad a new container called test. In batch we write haproxy.cfg to specify how we wanna it to behave 
+To create a load balancer, we createad a new container called test. In batch we write haproxy.cfg to specify how we wanna it to behave. It uses roundrobin backend webserver to receive requests. To better examine each requests, we created papertrail account. However, as we can see below, there is something wrong when setting up papertrail and we are working on it right now.
 
 ![p1](/P1.png)
 
