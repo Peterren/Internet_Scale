@@ -50,19 +50,19 @@ batch:
    image: tp33/django
    container_name: batch
    volumes:
-     - $PWD/app:/app
+      - ./app/batch:/app
    links:
       - kafka:kafka
       - es:es
-   command: python /app/script.py
+   command: bash -c "python script.py"
 
-test:
+load:
    image: haproxy
-   container_name: test
+   container_name: load
    links:
       - web
    volumes:
-      - ./app/batch/haproxy/
+      - ./app/batch/haproxy.cfg
    ports:
       - "80:80"
 
