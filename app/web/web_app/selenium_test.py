@@ -20,14 +20,14 @@ Class SeleniumTests(TestCase):
         drivers=driver.find_elements_by_css_selector('a')
         new_driver_button=drivers[-1]
         new_driver_button.click()
-        self.assertEquals(driver.get_element_by_css_selector('title').text, "Driver Information)
+        self.assertEquals(driver.get_element_by_css_selector('title').text, "Driver Information")
     
     def test_update_driver_link(self):
         driver.get("localhost:8000//list_drivers")
         drivers=driver.find_elements_by_css_selector('a')
         update_button=drivers[0]
         update_button.click()
-        self.assertEquals(driver.get_element_by_css_selector('title').text, "Driver Information)     
+        self.assertEquals(driver.get_element_by_css_selector('title').text, "Driver Information")     
     
     def test_404_page(self):
         driver.get("localhost:8000//list_drive")
@@ -35,7 +35,7 @@ Class SeleniumTests(TestCase):
                           
     def test_search_page(self):
         driver.get("localhost:8000//search")
-        self.assertEquals(driver.get_element_by_css_selector('title').text, ' Search Results "
+        self.assertEquals(driver.get_element_by_css_selector('title').text, " Search Results ")
     
     def test_products_list_html(self):
         driver.get("localhost:8000//list_products")
