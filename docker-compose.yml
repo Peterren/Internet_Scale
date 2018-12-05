@@ -1,0 +1,95 @@
+version: '3'
+services:
+  myservice:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: result/latest
+   
+  
+  models:
+    image: tp33/django
+    container_name: models
+    external_links:
+      - mysql:db
+    volumes:
+      - "./app/models:/app"
+    ports:
+      - "8001:8000"
+    command: bash -c "mod_wsgi-express start-server  --working-directory . --reload-on-changes models/wsgi.py"
+
+  exp:
+    image: tp33/django
+    container_name: exp
+    links:
+      - models:models-api
+    volumes:
+      - "./app/exp:/app"
+    ports:
+      - "8002:8000"
+    command: bash -c "mod_wsgi-express start-server  --working-directory . --reload-on-changes exp/wsgi.py"
+
+
+  web:
+    image: tp33/django
+    container_name: web
+    links:
+      - exp:exp-api
+    volumes:
+      - "./app/web:/app"
+    ports:
+      - "8000:8000"
+    command: bash -c "mod_wsgi-express start-server --working-directory . --reload-on-changes web/wsgi.py"
+
+  kafka:
+     image: spotify/kafka
+     container_name: kafka
+     environment:
+        ADVERTISED_HOST: kafka
+        ADVERTISED_PORT: 9092
+     hostname: kafka
+
+  es:
+     image: elasticsearch:2.0
+     container_name: es
+     ports:
+        - "9200:9200"
+
+  batch:
+     image: tp33/django
+     container_name: batch
+     volumes:
+        - ./app/batch:/app
+     links:
+        - kafka:kafka
+        - es:es
+     command: bash -c "python script.py"
+  
+  load:
+   image: haproxy
+   container_name: load
+   links:
+      - web
+   volumes:
+      - ./app/batch/:/usr/local/etc/haproxy/
+   ports:
+      - "80:80"
+
+  selenium-chrome:
+    image: selenium/standalone-chrome
+    container_name: selenium-chrome
+    links:
+      - web:web
+    ports:
+      - "4444:4444"
+
+  selenium-test:
+    image: tp33/django
+    container_name: selenium-test
+    links:
+      - selenium-chrome:selenium-chrome
+      - web:web
+    volumes:
+      - ./app/selenium:/app
+    command: bash -c "pip install selenium==3.14.0 && python selenium_test.py"
+
