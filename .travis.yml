@@ -20,6 +20,7 @@ before_install:
 
 install:
  - pip install redis
+ - pip install Django
 
 before_script:
  - docker-compose build
