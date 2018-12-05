@@ -6,6 +6,9 @@ We created tests for the front-end of our app. These included our core functions
 
 we linked our github repository to Travis CI and create .travis.yml file to let it build online and run unit tests.
 
+![CI1](/CI1.png)
+![CI2](/CI2.png)
+
 **Load Balancing and Haproxy**
 
 To create a load balancer, we createad a new container called test. In batch we write haproxy.cfg to specify how we wanna it to behave 
@@ -19,3 +22,4 @@ We downloaded Dockerfile online and started a Redis docker image. We decided to 
 docker-compose build
 
 docker-compose up -d
+
