@@ -71,7 +71,7 @@ services:
    links:
       - web
    volumes:
-      - ./app/batch/haproxy.cfg
+      - ./app/batch/:/usr/local/etc/haproxy/
    ports:
       - "80:80"
 
