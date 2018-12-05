@@ -13,6 +13,8 @@ we linked our github repository to Travis CI and create .travis.yml file to let 
 
 To create a load balancer, we createad a new container called test. In batch we write haproxy.cfg to specify how we wanna it to behave 
 
+![p1](/P1.png)
+
 **Caching with Redis**
 
 We downloaded Dockerfile online and started a Redis docker image. We decided to cache the entire site by adjusting settings in web layer since we don't have many available pages. We invalidate the cache content in 5 seconds. 
