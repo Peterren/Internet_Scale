@@ -18,7 +18,8 @@ install:
  - pip install redis
 
 before_script:
- - docker-compose up
+ - docker-compose build
+ - docker-compose up -d
 
 script:
  - docker exec -it models bash -c "python manage.py test"
