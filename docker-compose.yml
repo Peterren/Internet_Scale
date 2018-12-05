@@ -64,15 +64,15 @@ selenium-chrome:
   ports:
     - "4444:4444"
 
-selenium-test:
-  image: tp33/django
-  container_name: selenium-test
-  links:
-    - selenium-chrome:selenium-chrome
-    - web:web
-  volumes:
-    - ./app/selenium:/app
-  command: bash -c "pip install selenium==<some version number> && python <your_selenium_test_script>.py"
+#selenium-test:
+#  image: tp33/django
+#  container_name: selenium-test
+#  links:
+#    - selenium-chrome:selenium-chrome
+#    - web:web
+#  volumes:
+#    - ./app/selenium:/app
+#  command: bash -c "pip install selenium==<some version number> && python <your_selenium_test_script>.py"
   
 version: '3'
 services:
