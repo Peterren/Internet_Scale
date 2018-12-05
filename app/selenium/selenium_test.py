@@ -5,7 +5,7 @@ from selenium import webdriver
 import requests
 from .views import search_drivers
 
-Class SeleniumTests(TestCase):
+class SeleniumTests(TestCase):
     
     def setUp(self):
         driver=webdriver.Chrome()
