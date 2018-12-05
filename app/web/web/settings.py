@@ -161,4 +161,4 @@ SASS_PRECISION = 8
 SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
 
 CACHE_MIDDLEWARE_ALIAS = "Redis"
-CACHE_MIDDLEWARE_SECONDS – 5
+CACHE_MIDDLEWARE_SECONDS = 5
