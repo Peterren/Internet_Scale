@@ -13,3 +13,7 @@ To create a load balancer, we createad a new container called test. In batch we 
 **Caching with Redis**
 
 We downloaded Dockerfile online and started a Redis docker image. We decided to cache the entire site by adjusting settings in web layer since we don't have many available pages. We invalidate the cache content in 5 seconds. 
+
+**Required Command**
+docker-compose build
+docker-compose up -d
