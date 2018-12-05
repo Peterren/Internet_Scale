@@ -1,4 +1,4 @@
-Continuous Integration with Selenium and Travis
+**Continuous Integration with Selenium and Travis**
 
 We used Selenium with the Chrome webdriver module to test the page source of our rendered front-end templates. The integration and unit tests are run on Travis CI. The mysql containers are setup in docker-compose beforehand. Travis builds up each of the containers in order specified.
 
