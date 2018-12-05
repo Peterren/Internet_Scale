@@ -32,6 +32,10 @@ Class SeleniumTests(TestCase):
     def test_404_page(self):
         driver.get("localhost:8000//list_drive")
         self.assertEquals(driver.get_element_by_xpath('//h1[./a]').text, 'warning')
+                          
+    def test_search_page(self):
+        driver.get("localhost:8000//search")
+        self.assertEquals(driver.get_element_by_css_selector('title').text, ' Search Results "
     
     def test_products_list_html(self):
         driver.get("localhost:8000//list_products")
