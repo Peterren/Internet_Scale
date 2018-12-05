@@ -4,7 +4,7 @@ models:
   external_links:
     - mysql:db
   volumes:
-    - "./app/models:/app"
+    - ./app/models:/app
   ports:
     - "8001:8000"
   command: bash -c "mod_wsgi-express start-server  --working-directory . --reload-on-changes models/wsgi.py"
@@ -15,7 +15,7 @@ exp:
   links:
     - models:models-api
   volumes:
-    - "./app/exp:/app"
+    - ./app/exp:/app
   ports:
     - "8002:8000"
   command: bash -c "mod_wsgi-express start-server  --working-directory . --reload-on-changes exp/wsgi.py"
@@ -27,9 +27,9 @@ web:
   links:
     - exp:exp-api
   volumes:
-    - "./app/web:/app"
-  ports:
-    - "8000:8000"
+    - ./app/web:/app
+  # ports:
+  #   - "8000:8000"
   command: bash -c "mod_wsgi-express start-server --working-directory . --reload-on-changes web/wsgi.py"
 
 kafka:
@@ -50,34 +50,44 @@ batch:
    image: tp33/django
    container_name: batch
    volumes:
-     - "$PWD/app:/app"
+     - $PWD/app:/app
    links:
       - kafka:kafka
       - es:es
    command: python /app/script.py
 
-selenium-chrome:
-  image: selenium/standalone-chrome
-  container_name: selenium-chrome
-  links:
-    - web:web
-  ports:
-    - "4444:4444"
+test:
+   image: haproxy
+   container_name: test
+   links:
+      - web
+   volumes:
+      - ./app/batch/haproxy/
+   ports:
+      - "80:80"
 
-selenium-test:
-  image: tp33/django
-  container_name: selenium-test
-  links:
-    - selenium-chrome:selenium-chrome
-    - web:web
-  volumes:
-    - ./app/selenium:/app
-  command: bash -c "pip install selenium==<some version number> && python <your_selenium_test_script>.py"
+# selenium-chrome:
+#   image: selenium/standalone-chrome
+#   container_name: selenium-chrome
+#   links:
+#     - web:web
+#   ports:
+#     - "4444:4444"
+
+# selenium-test:
+#   image: tp33/django
+#   container_name: selenium-test
+#   links:
+#     - selenium-chrome:selenium-chrome
+#     - web:web
+#   volumes:
+#     - ./app/selenium:/app
+#   command: bash -c "pip install selenium==3.14.0 && python selenium.test.py"
   
-version: '3'
-services:
-  myservice:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: result/latest
+# version: '3'
+# services:
+#   myservice:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     image: result/latest
