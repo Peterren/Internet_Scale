@@ -169,5 +169,5 @@ load:
       - web:web
     volumes:
       - ./app/selenium:/app
-    command: bash -c "pip install selenium==3.14.0 && python selenium_test.py"
+    command: bash -c "pip install selenium==<some version number> && python <your_selenium_test_script>.py"
 
