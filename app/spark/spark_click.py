@@ -1,14 +1,26 @@
 from pyspark import SparkContext
+import itertools
 
 sc = SparkContext("spark://spark-master:7077", "PopularItems")
 
 data = sc.textFile("/tmp/data/access.log", 2)     # each worker loads a piece of the data file
 
+# Read data in as pairs of (user_id, item_id clicked on by the user)
 pairs = data.map(lambda line: line.split("\t"))   # tell each worker to split each line of it's partition
 
-events_of_users = pairs.groupByKey()
+# Group data into (user_id, list of item ids they clicked on)
+click_of_users = pairs.groupByKey()
 
+# Transform into (user_id, (item1, item2) where item1 and item2 are pairs of items the user clicked on
+click_of_users_pair = click_of_users.flatMap(lambda x: [(x[0],y) for y in itertools.combinations_with_replacement(x[1],2)]).distinct()
 
+# Transform into ((item1, item2), list of user1, user2 etc) where users are all the ones who co-clicked (item1, item2)
+user_of_item=click_of_users_pair.map(lambda x: (x[1],x[0]))
+
+# Transform into ((item1, item2), count of distinct users who co-clicked (item1, item2)
+# Filter out any results where less than 3 users co-clicked the same pair of items
+user_of_item_cnt = user_of_item.groupByKey.map(lambda itemuser: (itemuser,len(itemuser))).filter(lambda cnt: cnt[1]>=3)
+data=dataset.map(lambda word: (word,len(word))).filter(lambda t : t[1] >=6) 
 
 pages = pairs.map(lambda pair: (pair[1], 1))      # re-layout the data to ignore the user id
 count = pages.reduceByKey(lambda x,y: int(x)+int(y))        # shuffle the data so that each key is only on one worker
