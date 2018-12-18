@@ -1,0 +1,9 @@
+Pairs of products: ('1', '3') Number of people who viewed both products: 3
+Pairs of products: ('1', '8') Number of people who viewed both products: 3
+Pairs of products: ('10', '2') Number of people who viewed both products: 3
+Pairs of products: ('10', '5') Number of people who viewed both products: 3
+Pairs of products: ('2', '5') Number of people who viewed both products: 4
+Pairs of products: ('2', '7') Number of people who viewed both products: 3
+Pairs of products: ('3', '5') Number of people who viewed both products: 4
+Pairs of products: ('3', '7') Number of people who viewed both products: 3
+Pairs of products: ('3', '8') Number of people who viewed both products: 5
