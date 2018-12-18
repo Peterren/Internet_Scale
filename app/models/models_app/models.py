@@ -37,4 +37,6 @@ class Authenticator(models.Model):
 
     def __str__(self):
         return ' '.join(map(str, [self.authenticator, self.user_id]))
-
+class recommand(models.Model):
+    item1 = models.IntegerField()
+    recommended_items = models.CharField(max_length=50)
