@@ -133,7 +133,7 @@ spark-worker:
     apt-get install python-pip -y &&
     pip install mysqlclient &&
     apt-get install python-mysqldb &&
-    python spark_clear.py"
+    python spark_click.py"
   container_name: spark-worker
   hostname: spark-worker
   environment:
