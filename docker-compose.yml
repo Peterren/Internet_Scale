@@ -95,7 +95,13 @@ services:
 
   spark-master:
   image: gettyimages/spark
-  command: bin/spark-class org.apache.spark.deploy.master.Master -h spark-master
+  command: >
+    bash -c "bin/spark-class org.apache.spark.deploy.master.Master -h spark-master &&
+    apt-get update &&
+    apt-get install python3-dev libmysqlclient-dev -y &&
+    apt-get install python-pip -y &&
+    pip install mysqlclient &&
+    apt-get install python-mysqldb"
   container_name: spark-master
   hostname: spark-master
   environment:
@@ -116,11 +122,18 @@ services:
     - 7077:7077
     - 8080:8080
   volumes:
-    - ./data:/tmp/data
+    - ./app/spark:/tmp/data
 
 spark-worker:
   image: gettyimages/spark
-  command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
+  command: >
+    bash -c "bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077 &&
+    apt-get update &&
+    apt-get install python3-dev libmysqlclient-dev -y &&
+    apt-get install python-pip -y &&
+    pip install mysqlclient &&
+    apt-get install python-mysqldb &&
+    python spark_clear.py"
   container_name: spark-worker
   hostname: spark-worker
   environment:
@@ -141,4 +154,4 @@ spark-worker:
   ports:
     - 8081:8081
   volumes:
-    - ./data:/tmp/data
+    - ./app/spark:/tmp/data
