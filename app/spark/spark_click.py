@@ -35,6 +35,9 @@ count = pages.reduceByKey(lambda x,y: int(x)+int(y))        # shuffle the data s
 output = count.collect()                          # bring the data back to the master node so we can print it out
 for page_id, count in output:
   print("Pairs of products: %s Number of people who viewed both products: %d" % (page_id, count))
+
+output = recommend_item_final.collect()
+
 sc.stop()
 
 
