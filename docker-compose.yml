@@ -104,6 +104,8 @@ services:
     apt-get install python-mysqldb"
   container_name: spark-master
   hostname: spark-master
+  links:
+    - mysql:db
   environment:
     MASTER: spark://spark-master:7077
     SPARK_CONF_DIR: /conf
@@ -136,6 +138,8 @@ spark-worker:
     python spark_click.py"
   container_name: spark-worker
   hostname: spark-worker
+  links:
+    - mysql:db
   environment:
     SPARK_CONF_DIR: /conf
     SPARK_WORKER_CORES: 2
