@@ -1,5 +1,7 @@
 from pyspark import SparkContext
 import itertools
+import MySQLdb
+
 
 sc = SparkContext("spark://spark-master:7077", "PopularItems")
 
@@ -32,7 +34,28 @@ count = pages.reduceByKey(lambda x,y: int(x)+int(y))        # shuffle the data s
 
 output = count.collect()                          # bring the data back to the master node so we can print it out
 for page_id, count in output:
-    print ("page_id %s count %d" % (page_id, count))
-print ("Popular items done")
-
+  print("Pairs of products: %s Number of people who viewed both products: %d" % (page_id, count))
 sc.stop()
+
+
+db = MySQLdb.connect("db", "root", "$3cureUS", "cs4501")
+cursor = db.cursor()
+
+insert_query = "INSERT INTO Recommand (item1, recommended_items) VALUES (%s, %s);"
+
+cursor.execute("TRUNCATE TABLE Recommand;")
+
+for item1, recommended_items in output:
+    recommended_items = ",".join(recommended_items)
+
+    # Insert recommendation item into db
+    try:
+        cursor.execute(insert_query, (item1, recommended_items))
+        db.commit()
+    except:
+        db.rollback()
+
+# Disconnect from server
+db.close()
+
+
